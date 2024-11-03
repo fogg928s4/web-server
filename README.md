@@ -12,6 +12,14 @@ For the integrity of your system, run this on a **venv**. This project works on 
 - socket
 - io
 
+Subsequently, you will probably want to test with some frameworks like Django or Flask, to which you'll need to install the respective packages with pip using
+    
+    $ python3 -m venv web-svr
+    $ source web-svr/bin/activate
+    (web-svr) $ pip install pyramid
+    (web-svr) $ pip install django
+    (web-svr) $ pip install flask
+
 Each file has a different purpose, so run using (replacing file with the desired one)
 
     $ python3 [ file ].py
