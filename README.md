@@ -15,3 +15,6 @@ For the integrity of your system, run this on a **venv**. This project works on 
 Each file has a different purpose, so run using (replacing file with the desired one)
 
     $ python3 [ file ].py
+
+### Idea
+The idea for this project came from this site https://ruslanspivak.com/lsbaws-part1/
