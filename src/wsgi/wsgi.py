@@ -1,13 +1,15 @@
 # Python Web Server Gateway Interface or WSGI
-# wsgi allows us to use diff web fw with diff web servers
+# it allows us to use diff web fw with diff web servers
 # this allows us to not make changes to the server when implementing a new fw
 # it allows us to choose a fw that suits and benefits both the server and the app
 # other langs have similar like Java's Servlet API and Ruby's Rack
 
+# this is just a minimal implementation tho
+
 import io
-import queue
 import socket
 import sys
+
 
 # create a WSGI Server class
 class WSGIServer(object):
@@ -49,7 +51,7 @@ class WSGIServer(object):
         while True:
             # new client conn
             self.client_connection, client_address = listen_socket.accept()
-            self.handle_one_request() # this will be defined in a moment dw
+            self.handle_one_request()  # this will be defined in a moment dw
 
     def handle_one_request(self):
         # will handle only one request
@@ -62,6 +64,7 @@ class WSGIServer(object):
         for line in request_data.splitlines():
             print(''.join(f'< {line} \n'))
 
+        self.parse_request(request_data)
         # env dictionary w/ req data
         env = self.get_environ()
 
@@ -69,10 +72,10 @@ class WSGIServer(object):
         result = self.application(env, self.start_response)
 
         # construct a response adn send to user
-        self.finish_responsE(result)
+        self.finish_response(result)
 
     # Parses the request into lines and makes sure it's presented accordingly
-    def parse_request(self,text):
+    def parse_request(self, text):
         request_line = text.splitlines()[0]
         # CRLF
         request_line = request_line.strip('\r\n')
@@ -112,14 +115,14 @@ class WSGIServer(object):
         ]
         self.headers_set = [status, response_headers + server_headers]
         # WSGI spec says a start_response must return a 'write' callable
-        # but we will ignore that ...for now (return self.finish_response)
+        # but, we will ignore that ...for now (return self.finish_response)
 
     def finish_response(self, result):
         try:
             status, response_headers = self.headers_set
             # this will be sent to the client
             response = f'HTTP/1.1 {status}\r\n'
-            # header in response headers will be wrtten info by info
+            # header in response headers will be written info by info
             for header in response_headers:
                 response += '{0}: {1}\r\n'.format(*header)
             response += '\r\n'
@@ -142,15 +145,17 @@ class WSGIServer(object):
 
 SERVER_ADDRESS = (HOST, PORT) = ('', 8888)
 
+
 # start and make the server
 def make_server(server_address, application):
     server = WSGIServer(server_address)
     server.set_app(application)
     return server
 
+
 # this is the start point
 if __name__ == '__main__':
-    # if doesnt include an app, exits from the get-go
+    # doesn't include an app, exits from the get-go
     if len(sys.argv) < 2:
         sys.exit('Provide a WSGI application as module:callable')
 
