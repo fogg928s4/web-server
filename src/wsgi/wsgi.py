@@ -143,7 +143,7 @@ class WSGIServer(object):
 
 # OUTSIDE THE CLASS
 
-SERVER_ADDRESS = (HOST, PORT) = ('', 8888)
+SERVER_ADDRESS = (HOST, PORT) = ('', 8080)
 
 
 # start and make the server
