@@ -22,7 +22,7 @@ Hello Mom and Dad :D """
 def serve_forever():
     # creates socket over tcp/ip
     listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # binds teh addes and assigns local protocol to socket
+    # binds teh address and assigns local protocol to socket
     # this specs a port number, ip, or (n)either
     listen_socket.bind(SERVER_ADDRESS)  # server address and the sock
     # set options in order to restart with same address
