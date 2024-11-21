@@ -16,7 +16,7 @@ class WSGIServer(object):
     # properties
     addressFamily = socket.AF_INET
     socketType = socket.SOCK_STREAM
-    requestQueueSize = 1
+    requestQueueSize = 1  # HANDLES one req at a time
 
     # initializes the server
     def __init__(self, server_address):
